@@ -6,6 +6,7 @@ import (
 	"log"
 
 	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v4/middleware"
 	"github.com/spf13/viper"
 )
 
@@ -16,6 +17,9 @@ func main() {
 	homeHandler := home.HomeHandler{}
 
 	e := echo.New()
+
+	e.Use(middleware.Gzip())
+	e.Use(middleware.Logger())
 
 	e.Any("/", homeHandler.Any)
 	e.Static("/assets", "assets")

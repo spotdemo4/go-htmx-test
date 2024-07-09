@@ -25,10 +25,9 @@ func (h HomeHandler) Any(c echo.Context) error {
 
 func (h HomeHandler) Get(c echo.Context) error {
 	var items []models.Item
-	result := db.DB.Find(&items)
 
-	if result.Error != nil {
-		return echo.NewHTTPError(http.StatusInternalServerError, result.Error.Error())
+	if r := db.DB.Find(&items); r.Error != nil {
+		return echo.NewHTTPError(http.StatusInternalServerError, r.Error.Error())
 	}
 
 	return utils.Render(c, http.StatusOK, Hello(items))
@@ -36,10 +35,9 @@ func (h HomeHandler) Get(c echo.Context) error {
 
 func (h HomeHandler) Post(c echo.Context) error {
 	var items []models.Item
-	result := db.DB.Find(&items)
 
-	if result.Error != nil {
-		return echo.NewHTTPError(http.StatusInternalServerError, result.Error.Error())
+	if r := db.DB.Find(&items); r.Error != nil {
+		return echo.NewHTTPError(http.StatusInternalServerError, r.Error.Error())
 	}
 
 	return utils.Render(c, http.StatusOK, Hello(items))
