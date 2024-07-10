@@ -10,6 +10,7 @@ import templruntime "github.com/a-h/templ/runtime"
 
 import (
 	"go-htmx-test/models"
+	"go-htmx-test/web/components"
 	"go-htmx-test/web/layout"
 	"strconv"
 )
@@ -52,7 +53,11 @@ func Hello(items []models.Item) templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div><div id=\"deleteConfirmationContainer\"></div><div class=\"flex justify-center pt-2\"><button hx-post=\"/\" class=\"rounded-lg border border-slate-600 bg-blue-700 p-2 text-center hover:bg-blue-800\">Add Item</button></div><script>\n\t\t\tlucide.createIcons();\n\t\t\tdocument.addEventListener('htmx:afterSettle', function(event) {\n\t\t\t\tlucide.createIcons();\n\t\t\t});\n\t\t</script>")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</div><div id=\"modelContainer\"></div><div class=\"flex justify-center pt-2\"><button hx-post=\"/\" class=\"rounded-lg border border-slate-600 bg-blue-700 p-2 text-center hover:bg-blue-800\">Add Item</button></div>")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = components.CreateIcons().Render(ctx, templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -92,20 +97,20 @@ func ItemList(items []models.Item) templ.Component {
 			var templ_7745c5c3_Var4 string
 			templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs(item.Name)
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/home/home.templ`, Line: 36, Col: 17}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/home/home.templ`, Line: 32, Col: 17}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var4))
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</p><div><button x-show=\"showButtons\" x-cloak x-transition class=\"rounded-lg border border-slate-600 bg-green-700 p-2 hover:bg-green-800\"><i data-lucide=\"Pencil\"></i></button> <button x-show=\"showButtons\" x-cloak x-transition hx-delete=\"/\" hx-target=\"#deleteConfirmationContainer\" name=\"itemID\" value=\"")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</p><div><button x-show=\"showButtons\" x-cloak x-transition class=\"rounded-lg border border-slate-600 bg-green-700 p-2 hover:bg-green-800\"><i data-lucide=\"Pencil\"></i></button> <button x-show=\"showButtons\" x-cloak x-transition hx-delete=\"/\" hx-target=\"#modelContainer\" name=\"itemID\" value=\"")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var5 string
 			templ_7745c5c3_Var5, templ_7745c5c3_Err = templ.JoinStringErrs(strconv.Itoa(item.ID))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/home/home.templ`, Line: 53, Col: 34}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/home/home.templ`, Line: 49, Col: 34}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var5))
 			if templ_7745c5c3_Err != nil {
@@ -145,33 +150,33 @@ func DeleteConfirmation(item models.Item) templ.Component {
 		var templ_7745c5c3_Var7 string
 		templ_7745c5c3_Var7, templ_7745c5c3_Err = templ.JoinStringErrs(item.Name)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/home/home.templ`, Line: 87, Col: 58}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/home/home.templ`, Line: 83, Col: 58}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var7))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</h3><button @click=\"showDeleteConfirmation=false\" class=\"absolute right-0 top-0 mr-5 mt-5 flex h-8 w-8 items-center justify-center rounded-full text-gray-500 hover:bg-gray-600 hover:text-gray-800\"><svg class=\"h-5 w-5\" xmlns=\"http://www.w3.org/2000/svg\" fill=\"none\" viewBox=\"0 0 24 24\" stroke-width=\"1.5\" stroke=\"currentColor\"><path stroke-linecap=\"round\" stroke-linejoin=\"round\" d=\"M6 18L18 6M6 6l12 12\"></path></svg></button></div><div class=\"relative w-auto pb-8\"><p>Are you sure you want to delete peep ")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</h3><button @click=\"showDeleteConfirmation=false\" class=\"absolute right-0 top-0 mr-5 mt-5 flex h-8 w-8 items-center justify-center rounded-full text-gray-500 hover:bg-gray-600 hover:text-gray-800\"><i data-lucide=\"X\"></i></button></div><div class=\"relative w-auto pb-8\"><p>Are you sure you want to delete peep ")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var8 string
 		templ_7745c5c3_Var8, templ_7745c5c3_Err = templ.JoinStringErrs(item.Name)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/home/home.templ`, Line: 93, Col: 55}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/home/home.templ`, Line: 89, Col: 55}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var8))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("?</p></div><button hx-delete=\"/\">Test</button><div class=\"flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2\"><button @click=\"showDeleteConfirmation=false\" type=\"button\" class=\"inline-flex h-10 items-center justify-center rounded-md border px-4 py-2 text-sm font-medium transition-colors hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-neutral-100 focus:ring-offset-2\">Cancel</button> <button hx-delete=\"/\" hx-target=\"#itemListContainer\" name=\"confirmItemID\" value=\"")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("?</p></div><div class=\"flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2\"><button @click=\"showDeleteConfirmation=false\" type=\"button\" class=\"inline-flex h-10 items-center justify-center rounded-md border px-4 py-2 text-sm font-medium transition-colors hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-neutral-100 focus:ring-offset-2\">Cancel</button> <button hx-delete=\"/\" hx-target=\"#itemListContainer\" name=\"confirmItemID\" value=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var9 string
 		templ_7745c5c3_Var9, templ_7745c5c3_Err = templ.JoinStringErrs(strconv.Itoa(item.ID))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/home/home.templ`, Line: 98, Col: 107}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/home/home.templ`, Line: 93, Col: 107}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var9))
 		if templ_7745c5c3_Err != nil {

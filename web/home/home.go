@@ -12,13 +12,14 @@ import (
 type HomeHandler struct{}
 
 func (h HomeHandler) Any(c echo.Context) error {
-	if c.Request().Method == http.MethodGet {
+	switch c.Request().Method {
+	case http.MethodGet:
 		return h.Get(c)
-	} else if c.Request().Method == http.MethodPost {
+	case http.MethodPost:
 		return h.Post(c)
-	} else if c.Request().Method == http.MethodDelete {
+	case http.MethodDelete:
 		return h.Delete(c)
-	} else {
+	default:
 		return c.NoContent(http.StatusMethodNotAllowed)
 	}
 }

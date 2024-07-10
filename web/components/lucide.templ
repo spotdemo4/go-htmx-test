@@ -1,0 +1,10 @@
+package components
+
+templ CreateIcons() {
+	<script>
+        lucide.createIcons();
+        document.addEventListener('htmx:afterSettle', function(event) {
+            lucide.createIcons();
+        });
+	</script>
+}

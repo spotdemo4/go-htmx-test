@@ -1,8 +1,9 @@
 package home
 
 import (
-	"go-htmx-test/web/layout"
 	"go-htmx-test/models"
+	"go-htmx-test/web/components"
+	"go-htmx-test/web/layout"
 	"strconv"
 )
 
@@ -12,7 +13,7 @@ templ Hello(items []models.Item) {
 		<div id="itemListContainer" class="flex flex-col items-center gap-2">
 			@ItemList(items)
 		</div>
-		<div id="deleteConfirmationContainer"></div>
+		<div id="modelContainer"></div>
 		<div class="flex justify-center pt-2">
 			<button
 				hx-post="/"
@@ -21,12 +22,7 @@ templ Hello(items []models.Item) {
 				Add Item
 			</button>
 		</div>
-		<script>
-			lucide.createIcons();
-			document.addEventListener('htmx:afterSettle', function(event) {
-				lucide.createIcons();
-			});
-		</script>
+		@components.CreateIcons()
 	}
 }
 
@@ -48,7 +44,7 @@ templ ItemList(items []models.Item) {
 					x-cloak
 					x-transition
 					hx-delete="/"
-					hx-target="#deleteConfirmationContainer"
+					hx-target="#modelContainer"
 					name="itemID"
 					value={ strconv.Itoa(item.ID) }
 					class="rounded-lg border border-slate-600 bg-red-700 p-2 hover:bg-red-800"
@@ -86,13 +82,12 @@ templ DeleteConfirmation(item models.Item) {
 			<div class="flex items-center justify-between pb-3">
 				<h3 class="text-lg font-semibold">Deleting { item.Name }</h3>
 				<button @click="showDeleteConfirmation=false" class="absolute right-0 top-0 mr-5 mt-5 flex h-8 w-8 items-center justify-center rounded-full text-gray-500 hover:bg-gray-600 hover:text-gray-800">
-					<svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path></svg>
+					<i data-lucide="X"></i>
 				</button>
 			</div>
 			<div class="relative w-auto pb-8">
 				<p>Are you sure you want to delete peep { item.Name }?</p>
 			</div>
-			<button hx-delete="/">Test</button>
 			<div class="flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2">
 				<button @click="showDeleteConfirmation=false" type="button" class="inline-flex h-10 items-center justify-center rounded-md border px-4 py-2 text-sm font-medium transition-colors hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-neutral-100 focus:ring-offset-2">Cancel</button>
 				<button hx-delete="/" hx-target="#itemListContainer" name="confirmItemID" value={ strconv.Itoa(item.ID) } @click="showDeleteConfirmation=false" type="button" class="inline-flex h-10 items-center justify-center rounded-md border border-transparent bg-red-900 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-neutral-900 focus:ring-offset-2">Confirm</button>
