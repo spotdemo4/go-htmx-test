@@ -1,97 +1,126 @@
 package home
 
 import (
+	"fmt"
 	"go-htmx-test/models"
 	"go-htmx-test/web/components"
 	"go-htmx-test/web/layout"
-	"strconv"
 )
 
-templ Hello(items []models.Item) {
-	@layout.Base() {
+templ Home(items []models.Item) {
+	@layout.Base("Home", "A simple CRUD application to demonstrate htmx.") {
 		<div class="py-8 text-center text-3xl">Basic CRUD App</div>
-		<div id="itemListContainer" class="flex flex-col items-center gap-2">
-			@ItemList(items)
+		<div x-data="{ selectedItem: { id: 0, name: '' }, showPutForm: false, showPatchForm: false, showDeleteConfirmation: false }">
+			@components.Modal("showPutForm", "Add Item") {
+				<form hx-put="/" class="relative w-auto pb-4">
+					@Form("showPutForm")
+				</form>
+			}
+			@components.Modal("showPatchForm", "Edit Item") {
+				<form hx-patch="/" class="relative w-auto pb-4">
+					@Form("showPatchForm")
+				</form>
+			}
+			@components.Modal("showDeleteConfirmation", "Delete Item") {
+				<div class="relative w-auto pb-8">
+					<p>Are you sure you want to delete <strong x-text="selectedItem.name"></strong></p>
+				</div>
+				<div class="flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2">
+					<button
+						@click="showDeleteConfirmation=false"
+						type="button"
+						class="rounded-md border px-4 py-2 text-sm font-medium transition-colors hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-neutral-100 focus:ring-offset-2"
+					>
+						Cancel
+					</button>
+					<button
+						hx-delete="/"
+						:hx-target="'#item-' + selectedItem.id"
+						hx-swap="outerHTML"
+						x-model="selectedItem.id"
+						@click="showDeleteConfirmation = false"
+						name="id"
+						type="button"
+						class="rounded-md border border-transparent bg-red-900 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-neutral-900 focus:ring-offset-2"
+					>
+						Confirm
+					</button>
+				</div>
+			}
+			@Items(items)
+			<div class="flex justify-center py-2">
+				<button
+					@click="selectedItem = { id: 0, name: '' }; showPutForm = true"
+					class="rounded-lg border border-slate-600 bg-blue-700 p-2 text-center hover:bg-blue-800"
+				>
+					Add Item
+				</button>
+			</div>
 		</div>
-		<div id="modelContainer"></div>
-		<div class="flex justify-center pt-2">
+	}
+}
+
+templ Items(items []models.Item) {
+	<div id="items" hx-swap-oob="beforeend" class="flex flex-col items-center gap-2">
+		for _, item := range items {
+			@Item(item)
+		}
+	</div>
+}
+
+templ Item(item models.Item) {
+	<div
+		x-data="{ showButtons: false }"
+		id={ fmt.Sprint("item-", item.ID) }
+		hx-swap-oob="true"
+		@mouseenter="showButtons = true"
+		@mouseleave="showButtons = false"
+		class="flex h-14 w-96 items-center justify-between rounded-xl border border-slate-600 bg-gray-800 p-2 hover:bg-gray-700"
+	>
+		<p>{ item.Name }</p>
+		<div>
 			<button
-				hx-post="/"
-				class="rounded-lg border border-slate-600 bg-blue-700 p-2 text-center hover:bg-blue-800"
+				x-show="showButtons"
+				x-cloak
+				x-transition
+				@click={ fmt.Sprint("selectedItem = { id: ", item.ID, ", name: '", item.Name, "' }; showPatchForm = true") }
+				class="rounded-lg border border-slate-600 bg-green-700 p-2 hover:bg-green-800"
 			>
-				Add Item
+				@components.Pencil()
+			</button>
+			<button
+				x-show="showButtons"
+				x-cloak
+				x-transition
+				@click={ fmt.Sprint("selectedItem = { id: ", item.ID, ", name: '", item.Name, "' }; showDeleteConfirmation = true") }
+				class="rounded-lg border border-slate-600 bg-red-700 p-2 hover:bg-red-800"
+			>
+				@components.Trash()
 			</button>
 		</div>
-		@components.CreateIcons()
-	}
+	</div>
 }
 
-templ ItemList(items []models.Item) {
-	for _, item := range items {
-		<div x-data="{ showButtons: false }" @mouseenter="showButtons = true" @mouseleave="showButtons = false" class="flex h-14 w-96 items-center justify-between rounded-xl border border-slate-600 bg-gray-800 p-2 hover:bg-gray-700">
-			<p>{ item.Name }</p>
-			<div>
-				<button
-					x-show="showButtons"
-					x-cloak
-					x-transition
-					class="rounded-lg border border-slate-600 bg-green-700 p-2 hover:bg-green-800"
-				>
-					<i data-lucide="Pencil"></i>
-				</button>
-				<button
-					x-show="showButtons"
-					x-cloak
-					x-transition
-					hx-delete="/"
-					hx-target="#modelContainer"
-					name="itemID"
-					value={ strconv.Itoa(item.ID) }
-					class="rounded-lg border border-slate-600 bg-red-700 p-2 hover:bg-red-800"
-				>
-					<i data-lucide="trash"></i>
-				</button>
-			</div>
-		</div>
-	}
-}
-
-templ DeleteConfirmation(item models.Item) {
-	<div x-data="{ showDeleteConfirmation: true }" x-show="showDeleteConfirmation" class="fixed left-0 top-0 z-[99] flex h-screen w-screen items-center justify-center">
-		<div
-			x-show="showDeleteConfirmation"
-			x-transition:enter="ease-out duration-300"
-			x-transition:enter-start="opacity-0"
-			x-transition:enter-end="opacity-100"
-			x-transition:leave="ease-in duration-300"
-			x-transition:leave-start="opacity-100"
-			x-transition:leave-end="opacity-0"
-			@click="showDeleteConfirmation=false"
-			class="absolute inset-0 h-full w-full bg-gray-800 bg-opacity-70 backdrop-blur-sm"
-		></div>
-		<div
-			x-show="showDeleteConfirmation"
-			x-transition:enter="ease-out duration-300"
-			x-transition:enter-start="opacity-0 -translate-y-2 sm:scale-95"
-			x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
-			x-transition:leave="ease-in duration-200"
-			x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
-			x-transition:leave-end="opacity-0 -translate-y-2 sm:scale-95"
-			class="relative w-full border border-neutral-600 bg-gray-900 px-7 py-6 shadow-lg sm:max-w-lg sm:rounded-lg"
+templ Form(show string) {
+	<input type="hidden" name="id" x-model="selectedItem.id"/>
+	<div class="flex flex-col space-y-2">
+		<label for="name" class="text-sm font-semibold">Name</label>
+		<input type="text" name="name" x-model="selectedItem.name" class="rounded-lg border border-neutral-600 bg-gray-800 p-2 text-gray-200 focus:outline-none focus:ring-2 focus:ring-neutral-100 focus:ring-offset-2"/>
+	</div>
+	<div class="flex flex-col-reverse pt-2 sm:flex-row sm:justify-end sm:space-x-2">
+		<button
+			@click={ fmt.Sprint(show, " = false") }
+			type="button"
+			class="inline-flex h-10 items-center justify-center rounded-md border px-4 py-2 text-sm font-medium transition-colors hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-neutral-100 focus:ring-offset-2"
 		>
-			<div class="flex items-center justify-between pb-3">
-				<h3 class="text-lg font-semibold">Deleting { item.Name }</h3>
-				<button @click="showDeleteConfirmation=false" class="absolute right-0 top-0 mr-5 mt-5 flex h-8 w-8 items-center justify-center rounded-full text-gray-500 hover:bg-gray-600 hover:text-gray-800">
-					<i data-lucide="X"></i>
-				</button>
-			</div>
-			<div class="relative w-auto pb-8">
-				<p>Are you sure you want to delete peep { item.Name }?</p>
-			</div>
-			<div class="flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2">
-				<button @click="showDeleteConfirmation=false" type="button" class="inline-flex h-10 items-center justify-center rounded-md border px-4 py-2 text-sm font-medium transition-colors hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-neutral-100 focus:ring-offset-2">Cancel</button>
-				<button hx-delete="/" hx-target="#itemListContainer" name="confirmItemID" value={ strconv.Itoa(item.ID) } @click="showDeleteConfirmation=false" type="button" class="inline-flex h-10 items-center justify-center rounded-md border border-transparent bg-red-900 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-neutral-900 focus:ring-offset-2">Confirm</button>
-			</div>
-		</div>
+			Cancel
+		</button>
+		<button
+			@click={ fmt.Sprint(show, " = false") }
+			type="submit"
+			class="inline-flex h-10 items-center justify-center rounded-md border border-transparent bg-blue-900 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-neutral-900 focus:ring-offset-2"
+		>
+			Save
+		</button>
 	</div>
 }

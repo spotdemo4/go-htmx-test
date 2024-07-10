@@ -1,14 +1,14 @@
 package layout
 
-templ Base() {
+templ Base(title string, description string) {
 	<!DOCTYPE html>
-	<html>
+	<html lang="en">
 		<head>
-			<title>Test Page</title>
+			<title>{ title }</title>
 			<meta charset="utf-8"/>
 			<meta name="viewport" content="width=device-width, initial-scale=1"/>
+			<meta name="description" content="{ description }"/>
 			<script src="/assets/htmx.2.0.0.min.js"></script>
-			<script src="/assets/lucide.0.403.0.min.js"></script>
 			<script defer src="/assets/alpine.3.14.1.min.js"></script>
 			<link href="/assets/tailwind.css" rel="stylesheet"/>
 			<style>
