@@ -34,7 +34,7 @@ func (h HomeHandler) Get(c echo.Context) error {
 		return echo.NewHTTPError(http.StatusInternalServerError, r.Error.Error())
 	}
 
-	return utils.Render(c, http.StatusOK, Home(items))
+	return utils.Render(c, http.StatusOK, home(items))
 }
 
 func (h HomeHandler) Put(c echo.Context) error {
@@ -51,7 +51,7 @@ func (h HomeHandler) Put(c echo.Context) error {
 	}
 
 	println("Added item: ", item.Name)
-	return utils.CombineRender(c, http.StatusOK, Items([]models.Item{item}), Form("showPutForm"))
+	return utils.CombineRender(c, http.StatusOK, itemsDiv([]models.Item{item}), formElements("showPutForm"))
 }
 
 func (h HomeHandler) Patch(c echo.Context) error {
@@ -78,7 +78,7 @@ func (h HomeHandler) Patch(c echo.Context) error {
 	}
 
 	println("Updated item: ", item.Name)
-	return utils.CombineRender(c, http.StatusOK, Item(item), Form("showPatchForm"))
+	return utils.CombineRender(c, http.StatusOK, itemDiv(item), formElements("showPatchForm"))
 }
 
 func (h HomeHandler) Delete(c echo.Context) error {

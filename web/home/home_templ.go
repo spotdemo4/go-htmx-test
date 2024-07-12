@@ -15,7 +15,7 @@ import (
 	"go-htmx-test/web/layout"
 )
 
-func Home(items []models.Item) templ.Component {
+func home(items []models.Item) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templruntime.GetBuffer(templ_7745c5c3_W)
@@ -65,7 +65,7 @@ func Home(items []models.Item) templ.Component {
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
-				templ_7745c5c3_Err = Form("showPutForm").Render(ctx, templ_7745c5c3_Buffer)
+				templ_7745c5c3_Err = formElements("showPutForm").Render(ctx, templ_7745c5c3_Buffer)
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
@@ -95,7 +95,7 @@ func Home(items []models.Item) templ.Component {
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
-				templ_7745c5c3_Err = Form("showPatchForm").Render(ctx, templ_7745c5c3_Buffer)
+				templ_7745c5c3_Err = formElements("showPatchForm").Render(ctx, templ_7745c5c3_Buffer)
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
@@ -121,7 +121,7 @@ func Home(items []models.Item) templ.Component {
 					}()
 				}
 				ctx = templ.InitializeContext(ctx)
-				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"relative w-auto pb-8\"><p>Are you sure you want to delete <strong x-text=\"selectedItem.name\"></strong></p></div><div class=\"flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2\"><button @click=\"showDeleteConfirmation=false\" type=\"button\" class=\"rounded-md border px-4 py-2 text-sm font-medium transition-colors hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-neutral-100 focus:ring-offset-2\">Cancel</button> <button hx-delete=\"/\" :hx-target=\"&#39;#item-&#39; + selectedItem.id\" hx-swap=\"outerHTML\" x-model=\"selectedItem.id\" @click=\"showDeleteConfirmation = false\" name=\"id\" type=\"button\" class=\"rounded-md border border-transparent bg-red-900 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-neutral-900 focus:ring-offset-2\">Confirm</button></div>")
+				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"relative w-auto pb-8\"><p>Are you sure you want to delete <strong x-text=\"selectedItem.name\"></strong></p></div><div class=\"flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2\"><button x-on:click=\"showDeleteConfirmation = false\" type=\"button\" class=\"rounded-md border px-4 py-2 text-sm font-medium transition-colors hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-neutral-100 focus:ring-offset-2\">Cancel</button> <button hx-delete=\"/\" hx-swap=\"outerHTML\" x-bind:hx-target=\"&#39;#item-&#39; + selectedItem.id\" x-model=\"selectedItem.id\" x-on:click=\"showDeleteConfirmation = false\" name=\"id\" type=\"button\" class=\"rounded-md border border-transparent bg-red-900 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-neutral-900 focus:ring-offset-2\">Confirm</button></div>")
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
 				}
@@ -131,11 +131,11 @@ func Home(items []models.Item) templ.Component {
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = Items(items).Render(ctx, templ_7745c5c3_Buffer)
+			templ_7745c5c3_Err = itemsDiv(items).Render(ctx, templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"flex justify-center py-2\"><button @click=\"selectedItem = { id: 0, name: &#39;&#39; }; showPutForm = true\" class=\"rounded-lg border border-slate-600 bg-blue-700 p-2 text-center hover:bg-blue-800\">Add Item</button></div></div>")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"flex justify-center py-2\"><button x-on:click=\"selectedItem = { id: 0, name: &#39;&#39; }; showPutForm = true\" class=\"rounded-lg border border-slate-600 bg-blue-700 p-2 text-center hover:bg-blue-800\">Add Item</button></div></div>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -149,7 +149,7 @@ func Home(items []models.Item) templ.Component {
 	})
 }
 
-func Items(items []models.Item) templ.Component {
+func itemsDiv(items []models.Item) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templruntime.GetBuffer(templ_7745c5c3_W)
@@ -172,7 +172,7 @@ func Items(items []models.Item) templ.Component {
 			return templ_7745c5c3_Err
 		}
 		for _, item := range items {
-			templ_7745c5c3_Err = Item(item).Render(ctx, templ_7745c5c3_Buffer)
+			templ_7745c5c3_Err = itemDiv(item).Render(ctx, templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -185,7 +185,7 @@ func Items(items []models.Item) templ.Component {
 	})
 }
 
-func Item(item models.Item) templ.Component {
+func itemDiv(item models.Item) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templruntime.GetBuffer(templ_7745c5c3_W)
@@ -203,40 +203,40 @@ func Item(item models.Item) templ.Component {
 			templ_7745c5c3_Var7 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div x-data=\"{ showButtons: false }\" id=\"")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div id=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var8 string
 		templ_7745c5c3_Var8, templ_7745c5c3_Err = templ.JoinStringErrs(fmt.Sprint("item-", item.ID))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/home/home.templ`, Line: 74, Col: 35}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/home/home.templ`, Line: 77, Col: 35}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var8))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" hx-swap-oob=\"true\" @mouseenter=\"showButtons = true\" @mouseleave=\"showButtons = false\" class=\"flex h-14 w-96 items-center justify-between rounded-xl border border-slate-600 bg-gray-800 p-2 hover:bg-gray-700\"><p>")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" hx-swap-oob=\"true\" x-data=\"{ showButtons: false }\" x-on:mouseenter=\"showButtons = true\" x-on:mouseleave=\"showButtons = false\" class=\"flex h-14 w-96 items-center justify-between rounded-xl border border-slate-600 bg-gray-800 p-2 hover:bg-gray-700\"><p>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var9 string
 		templ_7745c5c3_Var9, templ_7745c5c3_Err = templ.JoinStringErrs(item.Name)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/home/home.templ`, Line: 80, Col: 16}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/home/home.templ`, Line: 84, Col: 16}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var9))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</p><div><button x-show=\"showButtons\" x-cloak x-transition @click=\"")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</p><div><button x-show=\"showButtons\" x-cloak x-transition x-on:click=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var10 string
 		templ_7745c5c3_Var10, templ_7745c5c3_Err = templ.JoinStringErrs(fmt.Sprint("selectedItem = { id: ", item.ID, ", name: '", item.Name, "' }; showPatchForm = true"))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/home/home.templ`, Line: 86, Col: 110}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/home/home.templ`, Line: 90, Col: 114}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var10))
 		if templ_7745c5c3_Err != nil {
@@ -250,14 +250,14 @@ func Item(item models.Item) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</button> <button x-show=\"showButtons\" x-cloak x-transition @click=\"")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("</button> <button x-show=\"showButtons\" x-cloak x-transition x-on:click=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var11 string
 		templ_7745c5c3_Var11, templ_7745c5c3_Err = templ.JoinStringErrs(fmt.Sprint("selectedItem = { id: ", item.ID, ", name: '", item.Name, "' }; showDeleteConfirmation = true"))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/home/home.templ`, Line: 95, Col: 119}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/home/home.templ`, Line: 99, Col: 123}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var11))
 		if templ_7745c5c3_Err != nil {
@@ -279,7 +279,7 @@ func Item(item models.Item) templ.Component {
 	})
 }
 
-func Form(show string) templ.Component {
+func formElements(show string) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templruntime.GetBuffer(templ_7745c5c3_W)
@@ -297,27 +297,27 @@ func Form(show string) templ.Component {
 			templ_7745c5c3_Var12 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<input type=\"hidden\" name=\"id\" x-model=\"selectedItem.id\"><div class=\"flex flex-col space-y-2\"><label for=\"name\" class=\"text-sm font-semibold\">Name</label> <input type=\"text\" name=\"name\" x-model=\"selectedItem.name\" class=\"rounded-lg border border-neutral-600 bg-gray-800 p-2 text-gray-200 focus:outline-none focus:ring-2 focus:ring-neutral-100 focus:ring-offset-2\"></div><div class=\"flex flex-col-reverse pt-2 sm:flex-row sm:justify-end sm:space-x-2\"><button @click=\"")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<input type=\"hidden\" name=\"id\" x-model=\"selectedItem.id\"><div class=\"flex flex-col space-y-2\"><label for=\"name\" class=\"text-sm font-semibold\">Name</label> <input x-model=\"selectedItem.name\" name=\"name\" type=\"text\" class=\"rounded-lg border border-neutral-600 bg-gray-800 p-2 text-gray-200 focus:outline-none focus:ring-2 focus:ring-neutral-100 focus:ring-offset-2\"></div><div class=\"flex flex-col-reverse pt-2 sm:flex-row sm:justify-end sm:space-x-2\"><button x-on:click=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var13 string
 		templ_7745c5c3_Var13, templ_7745c5c3_Err = templ.JoinStringErrs(fmt.Sprint(show, " = false"))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/home/home.templ`, Line: 112, Col: 40}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/home/home.templ`, Line: 121, Col: 44}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var13))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" type=\"button\" class=\"inline-flex h-10 items-center justify-center rounded-md border px-4 py-2 text-sm font-medium transition-colors hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-neutral-100 focus:ring-offset-2\">Cancel</button> <button @click=\"")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("\" type=\"button\" class=\"inline-flex h-10 items-center justify-center rounded-md border px-4 py-2 text-sm font-medium transition-colors hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-neutral-100 focus:ring-offset-2\">Cancel</button> <button x-on:click=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var14 string
 		templ_7745c5c3_Var14, templ_7745c5c3_Err = templ.JoinStringErrs(fmt.Sprint(show, " = false"))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/home/home.templ`, Line: 119, Col: 40}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/home/home.templ`, Line: 128, Col: 44}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var14))
 		if templ_7745c5c3_Err != nil {
