@@ -45,7 +45,7 @@ func home(items []models.Item) templ.Component {
 				}()
 			}
 			ctx = templ.InitializeContext(ctx)
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"py-8 text-center text-3xl\">Basic CRUD App</div><div x-data=\"{ selectedItem: { id: 0, name: &#39;&#39; }, showPutForm: false, showPatchForm: false, showDeleteConfirmation: false }\">")
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString("<div class=\"py-8 text-center text-3xl\">Basic CRUD App</div><div x-data=\"{ \n\t\t\t\t\tselectedItem: { id: 0, name: &#39;&#39; }, \n\t\t\t\t\tshowPutForm: false, \n\t\t\t\t\tshowPatchForm: false, \n\t\t\t\t\tshowDeleteConfirmation: false \n\t\t\t\t}\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -210,7 +210,7 @@ func itemDiv(item models.Item) templ.Component {
 		var templ_7745c5c3_Var8 string
 		templ_7745c5c3_Var8, templ_7745c5c3_Err = templ.JoinStringErrs(fmt.Sprint("item-", item.ID))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/home/home.templ`, Line: 77, Col: 35}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/home/home.templ`, Line: 84, Col: 35}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var8))
 		if templ_7745c5c3_Err != nil {
@@ -223,7 +223,7 @@ func itemDiv(item models.Item) templ.Component {
 		var templ_7745c5c3_Var9 string
 		templ_7745c5c3_Var9, templ_7745c5c3_Err = templ.JoinStringErrs(item.Name)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/home/home.templ`, Line: 84, Col: 16}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/home/home.templ`, Line: 91, Col: 16}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var9))
 		if templ_7745c5c3_Err != nil {
@@ -234,9 +234,9 @@ func itemDiv(item models.Item) templ.Component {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var10 string
-		templ_7745c5c3_Var10, templ_7745c5c3_Err = templ.JoinStringErrs(fmt.Sprint("selectedItem = { id: ", item.ID, ", name: '", item.Name, "' }; showPatchForm = true"))
+		templ_7745c5c3_Var10, templ_7745c5c3_Err = templ.JoinStringErrs(fmt.Sprint("selectedItem = { id: ", item.ID, ", name: `", item.Name, "` }; showPatchForm = true"))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/home/home.templ`, Line: 90, Col: 114}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/home/home.templ`, Line: 97, Col: 114}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var10))
 		if templ_7745c5c3_Err != nil {
@@ -255,9 +255,9 @@ func itemDiv(item models.Item) templ.Component {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var11 string
-		templ_7745c5c3_Var11, templ_7745c5c3_Err = templ.JoinStringErrs(fmt.Sprint("selectedItem = { id: ", item.ID, ", name: '", item.Name, "' }; showDeleteConfirmation = true"))
+		templ_7745c5c3_Var11, templ_7745c5c3_Err = templ.JoinStringErrs(fmt.Sprint("selectedItem = { id: ", item.ID, ", name: `", item.Name, "` }; showDeleteConfirmation = true"))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/home/home.templ`, Line: 99, Col: 123}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/home/home.templ`, Line: 106, Col: 123}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var11))
 		if templ_7745c5c3_Err != nil {
@@ -304,7 +304,7 @@ func formElements(show string) templ.Component {
 		var templ_7745c5c3_Var13 string
 		templ_7745c5c3_Var13, templ_7745c5c3_Err = templ.JoinStringErrs(fmt.Sprint(show, " = false"))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/home/home.templ`, Line: 121, Col: 44}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/home/home.templ`, Line: 128, Col: 44}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var13))
 		if templ_7745c5c3_Err != nil {
@@ -317,7 +317,7 @@ func formElements(show string) templ.Component {
 		var templ_7745c5c3_Var14 string
 		templ_7745c5c3_Var14, templ_7745c5c3_Err = templ.JoinStringErrs(fmt.Sprint(show, " = false"))
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/home/home.templ`, Line: 128, Col: 44}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/home/home.templ`, Line: 135, Col: 44}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var14))
 		if templ_7745c5c3_Err != nil {

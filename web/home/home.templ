@@ -10,7 +10,14 @@ import (
 templ home(items []models.Item) {
 	@layout.Base("Home", "A simple CRUD application to demonstrate htmx.") {
 		<div class="py-8 text-center text-3xl">Basic CRUD App</div>
-		<div x-data="{ selectedItem: { id: 0, name: '' }, showPutForm: false, showPatchForm: false, showDeleteConfirmation: false }">
+		<div
+			x-data="{ 
+					selectedItem: { id: 0, name: '' }, 
+					showPutForm: false, 
+					showPatchForm: false, 
+					showDeleteConfirmation: false 
+				}"
+		>
 			@components.Modal("showPutForm", "Add Item") {
 				<form hx-put="/" class="relative w-auto pb-4">
 					@formElements("showPutForm")
@@ -87,7 +94,7 @@ templ itemDiv(item models.Item) {
 				x-show="showButtons"
 				x-cloak
 				x-transition
-				x-on:click={ fmt.Sprint("selectedItem = { id: ", item.ID, ", name: '", item.Name, "' }; showPatchForm = true") }
+				x-on:click={ fmt.Sprint("selectedItem = { id: ", item.ID, ", name: `", item.Name, "` }; showPatchForm = true") }
 				class="rounded-lg border border-slate-600 bg-green-700 p-2 hover:bg-green-800"
 			>
 				@components.Pencil()
@@ -96,7 +103,7 @@ templ itemDiv(item models.Item) {
 				x-show="showButtons"
 				x-cloak
 				x-transition
-				x-on:click={ fmt.Sprint("selectedItem = { id: ", item.ID, ", name: '", item.Name, "' }; showDeleteConfirmation = true") }
+				x-on:click={ fmt.Sprint("selectedItem = { id: ", item.ID, ", name: `", item.Name, "` }; showDeleteConfirmation = true") }
 				class="rounded-lg border border-slate-600 bg-red-700 p-2 hover:bg-red-800"
 			>
 				@components.Trash()
