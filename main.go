@@ -22,7 +22,6 @@ func main() {
 
 	// Connect to database
 	db.Connect(env.DB_Host, env.DB_User, env.DB_Pass, env.DB_Name, env.DB_Port, env.Timezone)
-	db.AutoMigrate()
 
 	// Echo instance
 	e := echo.New()

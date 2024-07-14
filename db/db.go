@@ -2,6 +2,7 @@ package db
 
 import (
 	"fmt"
+	"go-htmx-test/models"
 
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
@@ -15,6 +16,11 @@ func Connect(host string, user string, password string, dbname string, port int,
 
 	if err != nil {
 		panic("failed to connect database")
+	}
+
+	// AutoMigrate
+	if err := d.AutoMigrate(&models.Item{}); err != nil {
+		panic("failed to auto migrate")
 	}
 
 	DB = d
